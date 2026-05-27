@@ -1,5 +1,171 @@
 # 권용준 (202530102)
 
+# (5월 27일 12주차 강의)
+### 이벤트 리스너 구현에 따른 부담
+  - 리스너의 추상 메소드를 모두 구현해야 하는 부담
+  - 예) 마우스 리스너에서 마우스가 눌러지는 경우(mousePressed())만 처리하고자 하는 경우에도 나머지 4개의 메소드를 모두 구현해야 하는 부담
+
+### 어댑터 클래스(Adapter)
+  - 리스너의 모든 메소드를 단순 리턴하도록 만든 클래스
+  - MouseAdapter 예
+  ```java
+  JLabel la;
+  contentPane addMouseLintener(new MyMouseAdapter());
+  
+  class MyMouseAdapter extends MouseAdapter {
+    public void mousePressed(MouseEvent e) {
+      int x = e.getX();
+      int y = e.getY();
+      la.setLocation(x,y);
+    } 
+  }
+  ```
+### JDK에서 제공하는 어댑터 클래스
+![](\lib\{F710DDBA-3002-4FD7-BC90-82DC8F6F5457}.png)
+
+### Key 이벤트와 포커스
+- 키 입력 시, 다음 세 경우 각각 Key 이벤트 발생
+  - 키를 누르는 순간
+  - 누른 키를 떼는 순간
+  - 누른 키를 떼는 순간(Unicode의 경우에만)
+
+- 키 이벤트를 받을 수 있는 조건
+  - 모든 컴포넌트
+  - 현재 포커스를 가진 컴포넌트가 키 이벤트 독점
+
+- 포커스(Focus)
+  - 컴포넌트나 응용프로그램이 키 이벤트를 독점하는 권한
+  - 컴포넌트에 포커스 설정 방법 : 다음 2 라인 코드 필요
+  ```java
+  component.setFocussble(true); // component가 포커스를 받을 수 있도록 설정
+  component.requestFocus(); // componeent에 포커스 강제 지정
+  ```
+
+- 자바 플랫폼마다 실행 환경의 초기화가 서로 다를 수 있기 때문에 다음 코드가 필요함 component.setFocusable(true);
+
+### KeyListener
+- 응용프로그램에서 KeyListener를 상소받아 키 리스너 구현
+- KeyListener의 3개 메소드
+```java
+void KeyPressed(KeyEvent e) {
+  // 이벤트 처리 루틴
+}
+void KeyReleased(KeyEvent e) {
+  // 이벤트 처리 루틴
+}
+void KeyTyped(KeyEvent e) {
+  // 이벤트 처리 루틴
+}
+```
+
+### 유니코드(Unicode) 키
+- 유니코드 키의 특징
+  - 국제 산업 표준
+  - 전 세계의 문자를 컴퓨터에서 일관되게 표현하기 위한 코드 체계
+  - 문자들에 대해서만 키 코드 값 정의 : A ~ Z, a ~ z, 0 ~ 9, !, @, & 등
+
+- 문자가 아닌 키 경우에는 표준화 키 코드 값 없음
+  - <Funtion> 키
+
+### 가상 키와 입력된 키 판별
+- KeyEvent 객체
+  - 입력된 키 정보를 가진 이벤트 객체
+  - KeyEvent 객체의 메소드로 입력 된 키 판별
+
+- KeyEvent 객체의 메소드로 입력된 키 판별
+  - char KeyEvent.getKeyChar()
+  - 키의 유니코드 문자 값 리턴
+  - Unicode 문자 키인 경우에만 의미 있음
+  - 입력된 키를 판별하기 위해 문자 값과 비교하면 됨
+
+- int KeyEvent.getKeyCode()
+  - 유니코드 키 포함
+  - 모든 키에 대한 정수형 키 코드 리턴
+  - 입력된 키를 판별하기 위해 가상기 값을 비교하여야 함
+  - 가상 키 값은 KeyEvent 클래스에 상수로 선언
+
+### 가상 키
+- 가상 키는 keyEvent 클래스에 상수로 선언
+- 가상 키의 일부 소개
+![](\lib\{0AC0CC54-3B31-4D26-91C8-34C0AF7ECE04}.png)
+
+### Mouse 이벤트와 MouseListener, MouseMotionListener
+- Mouse 이벤트 : 사용자의 마우스 조작에 따라 발생하는 이벤트
+  - mouseClicked() : 마우스가 눌러진 위치에서 그대로 떼어질 때 호출
+  - mouseReleased() : 마우스가 눌러진 위치에서 그대로 떼어지든 아니든 항상 호출
+  - mouseDragged() : 마우스가 드래그되는 동안 계속 여러번 호출
+
+- 마우스가 눌러진 위치에서 떼어지는 경우 메소드 호출 순서
+  ```java
+  mousePressed(), mouseReleased(), mouseClicked()
+  ```
+
+- 마우스가 드래그될 때 호출되는 메소드 호출 순서
+  ```java
+  mousePressed(), mouseDragged(), mouseDragged(), mouseDragged(),
+  mouseReleased()
+  ```
+
+### 마우스 리스너 달기와 MouseEvent 객체 활용
+- 마우스 리스너 달기
+  - 마우스 리스너는 컴포넌트에 다음과 같이 등록
+  ```java
+  component.addMouseListener(myMouseListener);
+  ```
+  - 컴포넌트가 마우스 무브나 마우스 드래깅을 함께 처리하고자 하면, MouseMotion 리스너 따로 등록
+  ```java
+  component.addMouseMotionListener(myMouseMotionListener);
+  ```
+
+- MouseEvent 객체 활용
+  - 마우스 포인터의 위치, 컴포넌트 내 상대 위치 : int getX(), int getY()
+  ```java
+  public void mousePressed(MouseEvent e){
+    int x = e.getX();
+    int y = e.getY();
+  }
+  ```
+
+  - 마우스 클릭 휫수 : int getClickCount()
+
+### 자바의 GUI 프로그래밍 방법
+- [자바의 GUI 프로그래밍 방법 2 종류]
+- 컴포넌트 기반 GUI 프로그래밍
+  - 스윙 컴포넌트를 이용하여 쉽게 GUI를 구축
+  - 자바에서 제공하는 컴포넌트의 한계를 벗어나지 못함
+
+- 그래픽을 이용하여 GUI 구축
+  - 그래픽 기반 GUI 프로그래밍
+  - 개발자가 직접 그래픽으로 화면을 구성하는 부담
+  - 독특한 GUI를 구성할 수 있는 장점
+  - GUI 처리의 실행속도가 빨라, 게임 등에 주로 이용
+
+- Swing 컴포넌트 중 8개 컴포넌트의 사용법에 관헤 설명중
+
+### 컴포넌트 기번 GUI 프로그래밍에 사용되는 스윙 컴포넌트
+![](lib\{5397DB5F-9588-45FA-AF5B-30B38CA0292E}.png)
+
+### 스윙 컴포넌트의 공통 메소드, JComponent의 메소드
+- Jcomponent
+  - 스윙 컴포넌트의 멤버를 모두 상속받는 슈퍼 클래스, 추상 클래스
+  - 스윙 컴포넌트들이 상속받는 공통 메소드와 상수 구현
+  - JComponent의 주요 메소드 사례
+  ```java
+  // 컴포넌트의 모양과 관련된 메소드
+  void setForceground(Color)
+  void setBackground(Color)
+  void setOpaque(Font)
+  void setFont()
+  Font getFont()
+
+  
+  void setEnabled(boolean)
+  void setVisible(boolean)
+  boolean isVisible()
+  ```
+
+### 
+
 # (5월 20일 12주차 강의)
 ### 이벤트 기반 프로그래밍
 - 이벤트 기반 프로그래밍(Event Driven Programming)

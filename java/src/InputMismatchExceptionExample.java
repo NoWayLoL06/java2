@@ -1,7 +1,7 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class InputMismatchException {
+public class InputMismatchExceptionExample {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("정수 3개를 입력하세요");
@@ -11,8 +11,8 @@ public class InputMismatchException {
             try {
                 n = scanner.nextInt();
             }
-            catch{InputMismatchException} {
-                
+            catch(InputMismatchException e) {
+                scanner.nextLine();
             }
         }
     }

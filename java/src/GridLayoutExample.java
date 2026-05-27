@@ -1,10 +1,11 @@
 import java.awt.Container;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class GridLayout extends JFrame {
-    public GridLayout() {
+public class GridLayoutExample extends JFrame {
+    public GridLayoutExample() {
         super("GridLayout 예제");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container contentPane = getContentPane();
@@ -20,6 +21,6 @@ public class GridLayout extends JFrame {
         setVisible(true);
     }
     public static void main(String[] args) {
-        new GridLayout();
+        new GridLayoutExample();
     }
 }
