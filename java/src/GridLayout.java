@@ -9,7 +9,7 @@ public class GridLayout extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container contentPane = getContentPane();
 
-        contentPane.setLayout(new GridLayout(2,5));
+        contentPane.setLayout(new java.awt.GridLayout(2,5));
 
         for (int i = 0; i < 10; i++) {
             String text = Integer.toString(i);

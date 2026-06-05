@@ -1,5 +1,170 @@
 # 권용준 (202530102)
 
+# (6월 5일 13주차 강의)
+### JButton으로 버튼 만들기
+
+### JCheckBox로 체크박스 만들기
+- JCheckBox의 용도
+  - 선택(selected)과 비선택(deselected) 두 상태만 가지는 버튼
+  ```java
+  JCheckBox()
+  JCheckBox(String text)
+  JCheckBox(Icon icon)
+  JCheckBox(String text, Icon icon)
+  JCheckBox(String text, boolean selected)
+  JCheckBox(String text, Icon icon, boolean selected)
+  ```
+  - 문자열을 가진 체크박스 생성 예
+  ```java
+  JCheckBox apple = new JCheckBox("사과");
+  JCheckBox pear = new JCheckBox("배");
+  ```
+
+### JRadioButton으로 라디오버튼 만들기
+- JRadioButton의 용도
+  - 버튼 그룹을 형성하고, 그룹에 속한 버튼 중 하나 선택하는 버튼
+
+### JTextField로 한줄 입력 창 만들기
+- JTextField
+  - 한 줄의 문자열을 입력 받는 창(텍스트 필드)
+    - 텍스트 입력 도중 <Enter>키가 입력되면 Action 이벤트 발생
+    - 입력 가능한 문자 개수와 입력 창의 크기는 서로 다름
+
+- 텍스트 필드 생성
+  ```java
+  JTextField()
+  JTextField(int columns)
+  JTextField(String text)
+  JTextField(String text, int columns)
+  ```
+
+- 텍스트 영역 생성 예
+  - "hello" 문자열의 초깃값을 가지고 한 줄에 20개의 문자가 입력가능하며, 7줄로 구성된 텍스트 영역 만들기
+  ```java 
+  JTextArea ta = new JTextArea("Hello", 7, 20);
+  container.add(ta);
+  ```
+
+### JComboBox<E>
+- JComboBox
+  - 텍스트필드와 버튼, 그리고 드롭다운 리스트로 구성되는 콤보박스
+  - 드롭 다운 리스트에서 선택한 것이 텍스트 필드에 나타남
+
+- 콤보박스 생성
+  ```java
+  JComboBox<E>()
+  JComboBox<E>(Vector ListData)
+  JComboBox<E>(E[] items)
+  ```  
+
+### 메뉴 구성
+- 메뉴 만들기에 필요한 스윙 컴포넌트
+  - 메뉴아이템 - JMenuitem
+  - 메뉴 = JMenu
+    - 여러 개의 메뉴 아이템을 가짐
+  - 메뉴바 - JMenuBar
+    - 여러 개의 메뉴를 붙이는 바이며, 프레임에 부착됨
+  - 분리선
+    - 메뉴아이템 사이의 분리선으로 separator라고 부름
+
+### 메뉴아이템에 Action 이벤트 달기
+- 메뉴아이템을 클릭하면 Action 발생
+  - 메뉴아이템은 사용자로부터의 지시나 명령을 받는데 사용
+  - ActionListener 인터페이스로 리스너 작성
+  - 각 메뉴아이템마다 이벤트 리스너 설정
+
+### 팝업 다이얼로그, JOptionPane
+- 팝업 다이얼로그
+  - 사용자에게 메시지를 전달하거나 문자열을 간단히 입력받는 용도
+  - JOptionPane 클래스를 이용하여 생성
+    - static 타입의 간단한 메소드 이용
+
+- 입력 다이얼로그 - JOptionPene.showInputDialog()
+  - 한 줄을 입력 받는 다이얼로그
+
+### 확인 다이얼로그
+- 확인 다이얼로그 - JOptionPane.showConfirmDialog
+
+### 메시지 다이얼로그
+- 메시지 다이얼로그 - showMessageDialog
+
+### 자바의 입출력 스트림
+- 자바의 입출력 스트림
+  - 입출력 장치와 자바 응용 프로그램 연결
+    - 입력 스트림 : 입력 장치로부터 자바 프로그램으로 데이터를 전달하는 객체
+  
+  - 특징
+    - 입출력 스트림 기본 단위 : 바이트
+    - 단방향 스트림, 선입선출 구조
+
+### 자바의 입출력 스트림 종류
+- 문자 스트림
+  - 문자만 입출력하는 스트림
+  - 문자가 아닌 바이너리 데이터는 스트림에서 처리하지 못함
+  - 문자가 아닌 데이터를 문자 스트림으로 출력하면 깨진 기호가 출력
+  - 바이너리 파일을 문자 스트림으로 읽으면 읽을 수 없는 바이트가 생겨서 오류 발생
+
+- 바이트 스트림
+  - 입출력 데이터를 단순 바이트의 흐름으로 처리
+
+### 스트림 연결
+- 여러 개의 스트림을 연결하여 사용할 수 있음
+  - 예) 키보드에서 문자를 입력받기 위해 System.in과 InputStreamReader를 연결한 코드
+  ```java
+  InputStreamReader rd = new InputStreamReader(System.in);
+  ```
+  ```java
+  while(true) {
+
+  }
+  ```
+
+### 문자 스트림으로 텍스트 파일 읽기
+- 텍스트 파일을 읽기 위해 문자 스트림 FileReader 클래스 이용
+  1. 파일 입력 스트림 생성(파일 열기)
+    - 스트림을 생성하고 파일을 열어 스트림과 연결
+  
+  2. 파일 읽기
+    - read()로 문자 하나씩 파일에서 읽음
+  
+  3. 스트림 닫기
+    - 스트림이 더 이상 필요 없으면 닫아야 함. 닫힌 스트림에서는 읽을 수 없음
+    - close()로 스트림 닫기
+
+### 파일 입출력과 예외 처리
+- 파일 입출력 동안 예외 발생 가능
+  - 스트림 생성 동안 : FileNotFoundException 발생 가능
+    - 파일의 경로명이 틀리거나, 디스크의 고장 등으로 파일을 열 수 없음
+  
+  - 파일 읽기, 쓰기, 닫기를 하는 동안 : IOException 발생 가능
+    - 디스크 오동작, 파일이 중간에 깨진 경우, 디스크 공간이 모자라서 파일 입출력 불가
+
+- try-catch 블록 반드시 필요
+  - 자바 컴파일러의 강제 사항
+
+### FileReader의 생성자와 주요 메소드
+![](\lib\image.png)
+
+### 바이트 스트림으로 바이너리 파일 쓰기
+- 바이너리 값을 파일에 저장하기
+  - 프로그램 내의 변수, 배열, 버퍼에 든 바이너리 값을 파일에 그래도 기록
+
+  1. 파일 출력 스트림 생성(파일 열기)
+    - 스트림을 생성하고 파일을 열어 스트림과 연결
+    ```java
+    FileOutputStream fout = new FileOutputStream("test.dat");
+    ```
+
+  2. 파일 쓰기
+    - write() 문자 하나 씩 파일에 기록
+    ```java
+    byte b[] = {7, 51, 3, 4, -1, 24};
+    for(int i = 0; i < b.length; i++) fout.write(b[i]); // 배열 b를 바이너리 그대로 기록
+    ```
+
+  3. 스트림 닫기
+    - close()로 스트림 닫기
+
 # (5월 20일 12주차 강의)
 ### 이벤트 기반 프로그래밍
 - 이벤트 기반 프로그래밍(Event Driven Programming)
@@ -114,7 +279,7 @@ class MyActionListener implements ActionListener {
     ```
 
 ### 이벤트 리스너 작성 방법
-# [ 3가지 방법 ]
+## [ 3가지 방법 ]
 - 독립 클래스로 작성
   - 이벤트 리스너를 완전한 클래스로 작성
   - 이벤트 리스너를 여러 곳에서 사용할 때 적합

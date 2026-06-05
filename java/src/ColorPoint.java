@@ -1,4 +1,14 @@
-public class ColorPoint {
+public class ColorPoint extends Point {
+    private String color;
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public void showColorPoint() {
+        System.out.print(color);
+        showPoint();
+    }
 
     public static void main(String[] args) {
         Point p = new Point();
@@ -22,13 +32,5 @@ class Point{
     
     public void showPoint() {
         System.out.println("(" + x + "," + y + ")");
-    }
-}
-
-class ColotPoint extend Point {
-    private String color;
-
-    public void setColor(String color) {
-        this.color = color;
     }
 }
